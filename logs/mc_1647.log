@@ -1,0 +1,45 @@
+[16:39:46] [Thread-3/INFO]: [STDOUT]: SERVER enter state: DORMANT
+[16:39:46] [EnvServerSocketHandler/INFO]: Received Mission token 7819540f-7098-411b-80e8-e6b10b36c9c1:0:0:1:true
+[16:39:46] [EnvServerSocketHandler/INFO]: Received mission init command  <MissionInit xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SchemaVersion="" PlatformVersion="0.37.0"><Mission><About><Summary>MineRLBasaltBuildVillageHouse-v0</Summary></About><ModSettings><MsPerTick>50</MsPerTick></ModSettings><ServerSection><ServerInitialConditions><Time><AllowPassageOfTime>false</AllowPassageOfTime></Time><AllowSpawning>true</AllowSpawning></ServerInitialConditions><ServerHandlers><DefaultWorldGenerator forceReset="true" generatorOptions="{}"/><ServerQuitFromTimeUp timeLimitMs="720000" description="out_of_time"/><ServerQuitWhenAnyAgentFinishes/></ServerHandlers></ServerSection><AgentSection mode="Survival"><Name>MineRLAgent0</Name><AgentStart><LowLevelInputs>true</LowLevelInputs><GuiScale>1.0</GuiScale><GammaSetting>2.0</GammaSetting><FOVSetting>70.0</FOVSetting><FakeCursorSize>16</FakeCursorSize><Inventory><InventoryObject slot="0" type="stone_pickaxe" quantity="1"/><InventoryObject slot="1" type="stone_axe" quantity="1"/><InventoryObject slot="2" type="cobblestone" quantity="64"/><InventoryObject slot="3" type="oak_log" quantity="64"/><InventoryObject slot="4" type="glass_pane" quantity="64"/><InventoryObject slot="5" type="torch" quantity="64"/><InventoryObject slot="6" type="dirt" quantity="64"/><InventoryObject slot="7" type="grass_block" quantity="64"/><InventoryObject slot="8" type="poppy" quantity="64"/><InventoryObject slot="9" type="spruce_log" quantity="64"/><InventoryObject slot="10" type="acacia_log" quantity="64"/><InventoryObject slot="11" type="jungle_log" quantity="64"/><InventoryObject slot="12" type="sand" quantity="64"/><InventoryObject slot="13" type="sandstone" quantity="64"/><InventoryObject slot="14" type="smooth_sandstone" quantity="64"/><InventoryObject slot="15" type="terracotta" quantity="64"/><InventoryObject slot="16" type="packed_ice" quantity="64"/><InventoryObject slot="17" type="snow_block" quantity="64"/><InventoryObject slot="18" type="cobweb" quantity="64"/><InventoryObject slot="19" type="white_wool" quantity="64"/><InventoryObject slot="20" type="black_dye" quantity="64"/><InventoryObject slot="21" type="blue_dye" quantity="64"/><InventoryObject slot="22" type="brown_dye" quantity="64"/><InventoryObject slot="23" type="green_dye" quantity="64"/><InventoryObject slot="24" type="red_dye" quantity="64"/><InventoryObject slot="25" type="white_dye" quantity="64"/><InventoryObject slot="26" type="yellow_dye" quantity="64"/><InventoryObject slot="27" type="flower_pot" quantity="64"/><InventoryObject slot="28" type="cactus" quantity="64"/><InventoryObject slot="29" type="lantern" quantity="64"/></Inventory><PreferredSpawnBiome>plains</PreferredSpawnBiome><DoneOnDeath>true</DoneOnDeath><SpawnInVillage>true</SpawnInVillage></AgentStart><AgentHandlers><FileBasedPerformanceProducer/><PauseCommand/><VideoProducer want_depth="false"><Width>640</Width><Height>360</Height></VideoProducer><HumanLevelCommands/><CameraCommands/></AgentHandlers></AgentSection></Mission><ExperimentUID>7819540f-7098-411b-80e8-e6b10b36c9c1</ExperimentUID><ClientRole>0</ClientRole><ClientAgentConnection><ClientIPAddress>127.0.0.1</ClientIPAddress><ClientMissionControlPort>0</ClientMissionControlPort><ClientCommandsPort>0</ClientCommandsPort><AgentIPAddress>127.0.0.1</AgentIPAddress><AgentMissionControlPort>0</AgentMissionControlPort><AgentVideoPort>0</AgentVideoPort><AgentDepthPort>0</AgentDepthPort><AgentLuminancePort>0</AgentLuminancePort><AgentObservationsPort>0</AgentObservationsPort><AgentRewardsPort>0</AgentRewardsPort><AgentColourMapPort>0</AgentColourMapPort></ClientAgentConnection></MissionInit>
+[16:39:47] [Render thread/INFO]: [STDOUT]: *** creating fake mouse cursor ***
+[16:39:47] [EnvServerSocketHandler/INFO]: [STDOUT]: Setting width, height to 640, 360
+[16:39:47] [Sound engine/FATAL]: Error executing task on Sound executor
+java.lang.NullPointerException: null
+	at net.minecraft.client.audio.ChannelManager.lambda$tick$3(ChannelManager.java:57) ~[mcprec-6.13.jar:?]
+	at net.minecraft.util.concurrent.ThreadTaskExecutor.run(ThreadTaskExecutor.java:136) ~[mcprec-6.13.jar:?]
+	at net.minecraft.util.concurrent.ThreadTaskExecutor.driveOne(ThreadTaskExecutor.java:109) ~[mcprec-6.13.jar:?]
+	at net.minecraft.util.concurrent.ThreadTaskExecutor.driveUntil(ThreadTaskExecutor.java:119) ~[mcprec-6.13.jar:?]
+	at net.minecraft.client.audio.SoundEngineExecutor.run(SoundEngineExecutor.java:39) ~[mcprec-6.13.jar:?]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_292]
+[16:39:47] [EnvServerSocketHandler/INFO]: [STDOUT]: Gamma: 2.0
+[16:39:47] [EnvServerSocketHandler/INFO]: [STDOUT]: FOV: 70.0
+[16:39:47] [EnvServerSocketHandler/INFO]: [STDOUT]: GuiScale: 1.0
+[16:39:47] [Render thread/INFO]: [STDOUT]: Seed not provided, generating random one: -9203985202838496021
+[16:39:48] [Render thread/WARN]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[16:39:48] [Render thread/WARN]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:39:48] [Render thread/WARN]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:39:48] [Render thread/WARN]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[16:39:48] [Render thread/WARN]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:39:48] [Render thread/INFO]: Reloading ResourceManager: Default
+[16:39:49] [Render thread/INFO]: Loaded 7 recipes
+[16:39:49] [Render thread/INFO]: Loaded 927 advancements
+[16:39:50] [Render thread/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[16:39:51] [Render thread/INFO]: Starting integrated minecraft server version 1.16.5
+[16:39:51] [Render thread/INFO]: Generating keypair
+[16:39:59] [Render thread/INFO]: Preparing start region for dimension minecraft:overworld
+[16:40:10] [Render thread/INFO]: Changing view distance to 11, from 10
+[16:40:11] [Render thread/INFO]: MineRLAgent0[local:E:0034c375] logged in with entity id 135 at (-305.5, 63.0, -290.5)
+[16:40:11] [Render thread/INFO]: MineRLAgent0 joined the game
+[16:40:11] [Render thread/INFO]: Preparing spawn area: 1%
+[16:40:11] [Render thread/INFO]: Time elapsed: 8 ms
+[16:40:12] [Render thread/INFO]: [STDOUT]: Starting new video null
+[16:40:12] [Render thread/INFO]: Saving and pausing game...
+[16:40:12] [Render thread/INFO]: Saving chunks for level 'ServerLevel[mcpworld9e1f30310df5]'/minecraft:overworld
+[16:40:13] [Render thread/INFO]: Saving chunks for level 'ServerLevel[mcpworld9e1f30310df5]'/minecraft:the_nether
+[16:40:13] [Render thread/INFO]: Saving chunks for level 'ServerLevel[mcpworld9e1f30310df5]'/minecraft:the_end
+[16:40:13] [Render thread/INFO]: MineRLAgent0 has made the advancement [Getting an Upgrade]
+[16:40:13] [Render thread/INFO]: MineRLAgent0 has made the advancement [Stone Age]
+[16:40:14] [Render thread/INFO]: [CHAT] MineRLAgent0 has made the advancement [Getting an Upgrade]
+[16:40:14] [Render thread/INFO]: [CHAT] MineRLAgent0 has made the advancement [Stone Age]
+[16:40:14] [Render thread/INFO]: Loaded 138 advancements
+[16:40:19] [EnvServerSocketHandler/INFO]: [STDOUT]: *** Stopping the replay, returning control to the inputs
