@@ -15,7 +15,7 @@ from vision_wrapper import VisionWrapper
 
 if __name__ == "__main__":
     minerl.env.OrderedDict
-    env = gym.make("MineRLBasaltBuildVillageHouse-v0")
+    env = gym.make("MineRLObtainDiamondShovel-v0")
     env.render_mode = "rgb_array"
     run = wandb.init(
         # set the wandb project where this run will be logged
