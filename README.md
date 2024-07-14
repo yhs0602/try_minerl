@@ -5,4 +5,4 @@
 
 # Performance
 
-- 28 FPS(=TPS) on M1 Pro (640 x 360 resolution)
+- 27~32 FPS(=TPS) on M1 Pro (640 x 360 resolution)
