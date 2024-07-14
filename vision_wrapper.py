@@ -21,4 +21,4 @@ class VisionWrapper(gym.Wrapper):
 
     def step(self, action):
         obs, reward, done, info = self.env.step(action)
-        return obs["pov"], info
+        return obs["pov"], reward, done, False, info

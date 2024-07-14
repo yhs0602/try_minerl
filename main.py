@@ -13,7 +13,7 @@ from vision_wrapper import VisionWrapper
 # import coloredlogs
 # coloredlogs.install(logging.DEBUG)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     minerl.env.OrderedDict
     env = gym.make("MineRLBasaltBuildVillageHouse-v0")
     env.render_mode = "rgb_array"
@@ -43,9 +43,7 @@ if __name__ == '__main__':
         ac = env.action_space.noop()
         # print(f"Action: {action}")
         obs, reward, done, info = vec_env.step([ac])
-        time_elapsed = max(
-            (time.time_ns() - start_time) / 1e9, sys.float_info.epsilon
-        )
+        time_elapsed = max((time.time_ns() - start_time) / 1e9, sys.float_info.epsilon)
         fps = int(i / time_elapsed)
         if i % 512 == 0:
             wandb.log(

@@ -4,4 +4,5 @@
 - https://github.com/minerllabs/minerl/issues/659#issuecomment-1306635414
 
 # Performance
-TODO
+
+- 27 FPS(=TPS) on M1 Pro
