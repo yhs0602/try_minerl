@@ -1,0 +1,2 @@
+2024-07-14 16:00:56 yanghyeonseoui-MacBookPro.local process_watcher[53211] INFO Process watcher started between parent 53202 and child 53204 
+2024-07-14 16:01:11 yanghyeonseoui-MacBookPro.local process_watcher[53211] INFO Parent is not running, hence we need terminate the child.
