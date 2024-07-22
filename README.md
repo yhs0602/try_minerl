@@ -5,8 +5,8 @@
 
 # Performance comparison
 > On M1 Pro (640 x 360 resolution, random agent)
-- MineRL: 27~32 FPS(=TPS)
-- Craftground: 100~ FPS(=TPS)
-- Crafter(2D): 539~ FPS(=TPS)
+- [MineRL](https://github.com/minerllabs/minerl): 27~32 FPS(=TPS)
+- [Craftground](https://github.com/yhs0602/CraftGround): 100~ FPS(=TPS)
+- [Crafter(2D)](https://github.com/danijar/crafter): 539~ FPS(=TPS)
 
 * Had to fix crafter `render()` for latest gym
