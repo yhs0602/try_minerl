@@ -1,3 +1,7 @@
 wandb
-
-
+videos
+logs
+runs
+models
+.DS_Store
+__pycache__
