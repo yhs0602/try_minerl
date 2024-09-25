@@ -22,7 +22,7 @@ class FeatureExtractorV2(BaseFeaturesExtractor):
         observation_space: gym.Space,
     ):
         super(FeatureExtractorV2, self).__init__(
-            observation_space=observation_space, features_dim=516
+            observation_space=observation_space, features_dim=512
         )
         # Given 7x7x3 input pixels, output a 64-dimensional feature vector
         # Input: (7x9, 7, 7, 3); (batch, height, width, channels)
@@ -35,6 +35,7 @@ class FeatureExtractorV2(BaseFeaturesExtractor):
             nn.ReLU(),
             nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),  # MaxPooling으로 공간 차원을 줄임
         )
         # Given 7x7x3 input pixels, output a 64-dimensional feature vector
         # Input: (2x9, 7, 7, 3); (batch, height, width, channels)
@@ -47,14 +48,16 @@ class FeatureExtractorV2(BaseFeaturesExtractor):
             nn.ReLU(),
             nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),  # MaxPooling으로 공간 차원을 줄임
         )
 
         # 7x9 tiles -> a single feature (dim: 256)
         self.player_orientation_extractor = nn.Sequential(
-            nn.Linear(1600, 4),
+            nn.Linear(64, 4),
             nn.ReLU(),
             nn.Softmax(dim=-1),  # 없어도 될 수도 있음.
         )
+        self.linear = nn.Linear(256 * 3 * 4 + 256 * 1 * 4 + 4, 512)
 
         # 256 + 256 + 4 -> 516
         # Actor와 Critic
@@ -75,25 +78,31 @@ class FeatureExtractorV2(BaseFeaturesExtractor):
         # )
 
     def forward(self, image):
-        # image.shape=(batch, height, width, channels)
-        ingame_tiles = image[:, :49, :, :3]
-        hud_tiles = image[:, 49:63, :, :3]
-        print(f"{ingame_tiles.shape=} {hud_tiles.shape=}")
+        # image.shape=(batch, channels, height, width)
+        ingame_tiles = image[:, :, :49, :63]
+        hud_tiles = image[:, :, 49:63, :63]
+        # print(f"{ingame_tiles.shape=} {hud_tiles.shape=} {image.shape=}")
         ingame_base_features = self.ingame_base_feature_cnn(ingame_tiles)
         ingame_features = self.ingame_feature_extractor(ingame_base_features)
+        # print(f"{ingame_base_features.shape=} {ingame_features.shape=}")
         center_feature = self.player_orientation_extractor(
             ingame_base_features[:, :, 3, 4]
         )
         hud_features = self.hud_feature_extractor(hud_tiles)
-        print(f"{ingame_features.shape=} {hud_features.shape=}")
+        # print(f"{ingame_features.shape=} {hud_features.shape=}")
 
         # Concatenate global features
         # print(f"{global_hud_feature.shape=} {global_ingame_feature.shape=} {center_feature.shape=}")
         global_features = torch.cat(
-            [ingame_features, center_feature, hud_features], dim=-1
+            [
+                ingame_features.reshape(-1, 256 * 3 * 4),
+                center_feature,
+                hud_features.reshape(-1, 256 * 1 * 4),
+            ],
+            dim=-1,
         )
         # print(f"{global_features.shape=}")
-        return global_features
+        return self.linear(global_features)
         # # Use global features to predict action
         # action_prob = self.actor(global_features)
         # # Use global features to predict value
