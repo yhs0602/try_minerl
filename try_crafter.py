@@ -8,15 +8,16 @@ from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 from wandb.integration.sb3 import WandbCallback
 
 from get_device import get_device
+from homeostasis_wrapper import HomeostasisWrapper
 from sb3_wrapper import SB3Wrapper
 
 if __name__ == "__main__":
     run = wandb.init(
         # set the wandb project where this run will be logged
-        project="crafter-test",
+        project="crafter-ksc",
         entity="jourhyang123",
         # track hyperparameters and run metadata
-        group="v1",
+        group="v1-homeostasis",
         sync_tensorboard=True,
         monitor_gym=True,  # auto-upload the videos of agents playing the game
         save_code=True,  # optional
@@ -30,7 +31,12 @@ if __name__ == "__main__":
     #     save_episode=False,
     # )
     env.render_mode = "rgb_array"
-    env = Monitor(SB3Wrapper(env))
+    wrapped_env = SB3Wrapper(env)
+
+    if True:
+        wrapped_env = HomeostasisWrapper(wrapped_env)
+
+    env = Monitor(wrapped_env)
     env = DummyVecEnv([lambda: env])
     eval_callback = EvalCallback(
         VecVideoRecorder(
