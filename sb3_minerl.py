@@ -12,6 +12,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from wandb.integration.sb3 import WandbCallback
 
 from get_device import get_device
+from minerl_sb3_wrapper import TreeWrapper
 from vision_wrapper import VisionWrapper
 
 coloredlogs.install(logging.DEBUG)
@@ -52,6 +53,7 @@ if __name__ == "__main__":
     env = basalt_specs.DoneOnESCWrapper(env)
     # env = gym.make("MineRLObtainDiamondShovel-v0")
     env.render_mode = "rgb_array"
+    env = TreeWrapper(env)
     run = wandb.init(
         # set the wandb project where this run will be logged
         project="ksc-journal-performance",
@@ -72,10 +74,10 @@ if __name__ == "__main__":
     # )
 
     vec_env = env
-    obs = vec_env.reset()
+    obs, info = vec_env.reset()
 
     model = RecurrentPPO(
-        "CnnPolicy",
+        "CnnLstmPolicy",
         env,
         verbose=1,
         device=device,
