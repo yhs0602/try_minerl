@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     minerl.env.OrderedDict
     env = gym.make("MineRLObtainDiamondShovel-v0")
-    # env.render_mode = "rgb_array"
+    env.render_mode = "rgb_array"
     run = wandb.init(
         # set the wandb project where this run will be logged
         project="ksc-journal-performance",
@@ -33,8 +33,8 @@ if __name__ == "__main__":
         save_code=True,  # optional
     )
     env = VisionWrapper(env, args.width, args.height)
-    # env = Monitor()
-    # env = DummyVecEnv([lambda: env])
+    env = Monitor(env)
+    env = DummyVecEnv([lambda: env])
     # env = VecVideoRecorder(
     #     env,
     #     f"videos/{run.id}",
