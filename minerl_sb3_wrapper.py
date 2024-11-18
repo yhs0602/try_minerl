@@ -37,8 +37,7 @@ class SB3MineRLWrapper(gymnasium.Wrapper):
         action_v2["attack"] = action[7]
         action_v2["camera_pitch"] = (action[8] - 12) * 15
         action_v2["camera_yaw"] = (action[9] - 12) * 15
-        obs, reward, done, info = self.env.step(action_v2)
-        return obs, reward, done, False, info
+        return self.env.step(action_v2)
 
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
