@@ -1,10 +1,10 @@
 import gym
 import gymnasium
 from gymnasium.core import WrapperActType, WrapperObsType
-from typing import SupportsFloat, Any, Tuple, Dict
+from typing import SupportsFloat, Any, Tuple, Dict, Optional
 
 
-class SB3MineRLWrapper(gym.Wrapper):
+class SB3MineRLWrapper(gymnasium.Wrapper):
     def __init__(self, env: gym.Env):
         self.env = env
         super().__init__(env)
@@ -37,4 +37,11 @@ class SB3MineRLWrapper(gym.Wrapper):
         action_v2["attack"] = action[7]
         action_v2["camera_pitch"] = (action[8] - 12) * 15
         action_v2["camera_yaw"] = (action[9] - 12) * 15
-        return self.env.step(action_v2)
+        obs, reward, done, info = self.env.step(action_v2)
+        return obs, reward, done, False, info
+
+    def reset(
+        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ) -> tuple[WrapperObsType, dict[str, Any]]:
+        obs = self.env.reset(seed=seed, options=options)
+        return obs, {}

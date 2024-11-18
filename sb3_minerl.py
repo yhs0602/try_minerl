@@ -53,7 +53,6 @@ if __name__ == "__main__":
     env = basalt_specs.DoneOnESCWrapper(env)
     # env = gym.make("MineRLObtainDiamondShovel-v0")
     env.render_mode = "rgb_array"
-    env = SB3MineRLWrapper(env)
     run = wandb.init(
         # set the wandb project where this run will be logged
         project="ksc-journal-performance",
@@ -64,6 +63,7 @@ if __name__ == "__main__":
         save_code=True,  # optional
     )
     env = VisionWrapper(env, args.width, args.height)
+    env = SB3MineRLWrapper(env)
     env = Monitor(env)
     vec_env = DummyVecEnv([lambda: env])
     # env = VecVideoRecorder(
