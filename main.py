@@ -12,6 +12,9 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 
 from vision_wrapper import VisionWrapper
 
+import logging
+import coloredlogs
+coloredlogs.install(logging.DEBUG)
 
 # Uncomment to see more logs of the MineRL launch
 # import coloredlogs
