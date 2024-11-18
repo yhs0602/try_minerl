@@ -1,7 +1,7 @@
 import gym
 import gymnasium
 from gymnasium.core import WrapperActType, WrapperObsType
-from typing import SupportsFloat, Any, Tuple, Dict, Optional
+from typing import SupportsFloat, Any, Tuple, Dict
 
 
 class TreeWrapper(gymnasium.Wrapper):
@@ -37,11 +37,4 @@ class TreeWrapper(gymnasium.Wrapper):
         action_v2["attack"] = action[7]
         action_v2["camera_pitch"] = (action[8] - 12) * 15
         action_v2["camera_yaw"] = (action[9] - 12) * 15
-        obs, reward, done, info = self.env.step(action_v2)
-        return obs, reward, done, False, info
-
-    def reset(
-        self, *, seed: Optional[int] = None, options: Optional[dict[str, Any]] = None
-    ) -> tuple[WrapperObsType, dict[str, Any]]:
-        obs = self.env.reset()
-        return obs
+        return self.env.step(action_v2)
