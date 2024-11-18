@@ -4,7 +4,7 @@ from gymnasium.core import WrapperActType, WrapperObsType
 from typing import SupportsFloat, Any, Tuple, Dict
 
 
-class TreeWrapper(gymnasium.Wrapper):
+class SB3MineRLWrapper(gym.Wrapper):
     def __init__(self, env: gym.Env):
         self.env = env
         super().__init__(env)
