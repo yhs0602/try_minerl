@@ -3,16 +3,33 @@ import sys
 import time
 
 import gym
-import minerl
-from stable_baselines3.common.monitor import Monitor
-from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
-
+import minerl.herobraine.env_specs.obtain_specs as minerl_herobraine_envs
 import wandb
+from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.vec_env import DummyVecEnv
+
 from vision_wrapper import VisionWrapper
+
 
 # Uncomment to see more logs of the MineRL launch
 # import coloredlogs
 # coloredlogs.install(logging.DEBUG)
+class ResizableObtainDiamondShovelEnvSpec(
+    minerl_herobraine_envs.ObtainDiamondShovelEnvSpec
+):
+    def __init__(self, resolution=[640, 360]):
+        minerl_herobraine_envs.HumanSurvival.__init__(
+            self,
+            name=f"MineRLObtainDiamondShovel-v0-res-{resolution[0]}-{resolution[1]}",
+            max_episode_steps=minerl_herobraine_envs.TIMEOUT,
+            # Hardcoded variables to match the pretrained models
+            fov_range=[70, 70],
+            resolution=resolution,
+            gamma_range=[2, 2],
+            guiscale_range=[1, 1],
+            cursor_size_range=[16.0, 16.0],
+        )
+
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
@@ -20,8 +37,9 @@ if __name__ == "__main__":
     argparser.add_argument("--height", type=int, default=360)
     args = argparser.parse_args()
 
-    minerl.env.OrderedDict
-    env = gym.make("MineRLObtainDiamondShovel-v0")
+    # minerl.env.OrderedDict
+    env = ResizableObtainDiamondShovelEnvSpec(resolution=[args.width, args.height])
+    # env = gym.make("MineRLObtainDiamondShovel-v0")
     env.render_mode = "rgb_array"
     run = wandb.init(
         # set the wandb project where this run will be logged
