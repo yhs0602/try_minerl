@@ -4,6 +4,8 @@ import time
 
 import gym
 import minerl.herobraine.env_specs.obtain_specs as minerl_herobraine_envs
+import minerl.herobraine.env_specs.basalt_specs as basalt_specs
+import minerl.env._singleagent as _singleagent
 import wandb
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
@@ -38,7 +40,10 @@ if __name__ == "__main__":
     args = argparser.parse_args()
 
     # minerl.env.OrderedDict
-    env = ResizableObtainDiamondShovelEnvSpec(resolution=[args.width, args.height])
+    env_spec = ResizableObtainDiamondShovelEnvSpec(resolution=[args.width, args.height])
+    env = _singleagent._SingleAgentEnv(env_spec=env_spec)
+    env = basalt_specs.BasaltTimeoutWrapper(env)
+    env = basalt_specs.DoneOnESCWrapper(env)
     # env = gym.make("MineRLObtainDiamondShovel-v0")
     env.render_mode = "rgb_array"
     run = wandb.init(
