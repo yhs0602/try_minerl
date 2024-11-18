@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     model = RecurrentPPO(
         "CnnLstmPolicy",
-        env,
+        vec_env,
         verbose=1,
         device=device,
         tensorboard_log=f"runs/{run.id}",
@@ -94,7 +94,7 @@ if __name__ == "__main__":
             ],
         )
     finally:
-        env.close()
+        vec_env.close()
         run.finish()
 
     # vec_env = make_vec_env(lambda: env, n_envs=1)
