@@ -64,16 +64,13 @@ if __name__ == "__main__":
     )
     env = VisionWrapper(env, args.width, args.height)
     env = SB3MineRLWrapper(env)
-    env = Monitor(env)
-    vec_env = DummyVecEnv([lambda: env])
+    vec_env = DummyVecEnv([lambda: Monitor(env)])
     # env = VecVideoRecorder(
     #     env,
     #     f"videos/{run.id}",
     #     record_video_trigger=lambda x: x % 40000 == 0,
     #     video_length=20000,
     # )
-
-    obs, info = vec_env.reset()
 
     model = RecurrentPPO(
         "CnnLstmPolicy",
