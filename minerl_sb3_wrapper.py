@@ -44,4 +44,4 @@ class TreeWrapper(gymnasium.Wrapper):
         self, *, seed: Optional[int] = None, options: Optional[dict[str, Any]] = None
     ) -> tuple[WrapperObsType, dict[str, Any]]:
         obs = self.env.reset()
-        return obs, {}
+        return obs

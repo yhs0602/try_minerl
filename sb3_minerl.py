@@ -65,7 +65,7 @@ if __name__ == "__main__":
     )
     env = VisionWrapper(env, args.width, args.height)
     env = Monitor(env)
-    env = DummyVecEnv([lambda: env])
+    vec_env = DummyVecEnv([lambda: env])
     # env = VecVideoRecorder(
     #     env,
     #     f"videos/{run.id}",
@@ -73,7 +73,6 @@ if __name__ == "__main__":
     #     video_length=20000,
     # )
 
-    vec_env = env
     obs, info = vec_env.reset()
 
     model = RecurrentPPO(
