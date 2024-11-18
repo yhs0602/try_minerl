@@ -35,8 +35,13 @@ class SB3MineRLWrapper(gymnasium.Wrapper):
         action_v2["sneak"] = action[5]
         action_v2["sprint"] = action[6]
         action_v2["attack"] = action[7]
-        action_v2["camera_pitch"] = (action[8] - 12) * 15
-        action_v2["camera_yaw"] = (action[9] - 12) * 15
+        action_v2["camera"] = [(action[8] - 12) * 15, (action[9] - 12) * 15]
+        action_v2["drop"] = 0
+        action_v2["swapHands"] = 0
+        action_v2["use"] = 0
+        for i in range(1, 10):
+            action_v2[f"hotbar.{i}"] = 0
+        action_v2["ESC"] = 0
         return self.env.step(action_v2)
 
     def reset(
