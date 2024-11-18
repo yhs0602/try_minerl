@@ -43,5 +43,5 @@ class SB3MineRLWrapper(gymnasium.Wrapper):
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
     ) -> tuple[WrapperObsType, dict[str, Any]]:
-        obs = self.env.reset(seed=seed, options=options)
+        obs = self.env.reset()
         return obs, {}
