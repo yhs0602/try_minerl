@@ -1,7 +1,7 @@
 import gym
 import gymnasium
 from gymnasium.core import WrapperActType, WrapperObsType
-from typing import SupportsFloat, Any
+from typing import SupportsFloat, Any, Tuple, Dict, Optional
 
 
 class TreeWrapper(gymnasium.Wrapper):
@@ -25,7 +25,7 @@ class TreeWrapper(gymnasium.Wrapper):
 
     def step(
         self, action: WrapperActType
-    ) -> tuple[WrapperObsType, SupportsFloat, bool, bool, dict[str, Any]]:
+    ) -> Tuple[WrapperObsType, SupportsFloat, bool, bool, Dict[str, Any]]:
         action_v2 = self.env.action_space.sample()
         action_v2["forward"] = action[0]
         action_v2["back"] = action[1]
@@ -41,7 +41,7 @@ class TreeWrapper(gymnasium.Wrapper):
         return obs, reward, done, False, info
 
     def reset(
-        self, *, seed: int | None = None, options: dict[str, Any] | None = None
+        self, *, seed: Optional[int] = None, options: Optional[dict[str, Any]] = None
     ) -> tuple[WrapperObsType, dict[str, Any]]:
         obs = self.env.reset(seed=seed, options=options)
         return obs, {}
