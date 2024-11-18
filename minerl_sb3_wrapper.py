@@ -42,6 +42,10 @@ class SB3MineRLWrapper(gymnasium.Wrapper):
 
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
-    ) -> tuple[WrapperObsType, dict[str, Any]]:
+    ) -> Tuple[WrapperObsType, dict[str, Any]]:
         obs = self.env.reset()
-        return obs
+        if isinstance(obs, tuple):
+            return obs
+        else:
+            # 결과가 튜플이 아니면 obs와 빈 딕셔너리를 반환
+            return obs, {}
