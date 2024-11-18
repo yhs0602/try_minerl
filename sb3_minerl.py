@@ -1,19 +1,18 @@
 import argparse
-import sys
-import time
+import logging
 
-import gym
-import minerl.herobraine.env_specs.obtain_specs as minerl_herobraine_envs
-import minerl.herobraine.env_specs.basalt_specs as basalt_specs
+import coloredlogs
 import minerl.env._singleagent as _singleagent
+import minerl.herobraine.env_specs.basalt_specs as basalt_specs
+import minerl.herobraine.env_specs.obtain_specs as minerl_herobraine_envs
 import wandb
+from sb3_contrib import RecurrentPPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
+from wandb.integration.sb3 import WandbCallback
 
+from get_device import get_device
 from vision_wrapper import VisionWrapper
-
-import logging
-import coloredlogs
 
 coloredlogs.install(logging.DEBUG)
 
@@ -42,7 +41,9 @@ if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
     argparser.add_argument("--width", type=int, default=640)
     argparser.add_argument("--height", type=int, default=360)
+    argparser.add_argument("--device-id", type=int, default=0)
     args = argparser.parse_args()
+    device = get_device(args.device_id)
 
     # minerl.env.OrderedDict
     env_spec = ResizableObtainDiamondShovelEnvSpec(resolution=[args.width, args.height])
@@ -72,26 +73,28 @@ if __name__ == "__main__":
 
     vec_env = env
     obs = vec_env.reset()
-    start_time = time.time_ns()
-    for i in range(9000000):
-        # sample one from the action space
-        ac = env.action_space.noop()
-        # print(f"Action: {action}")
-        obs, reward, done, info = vec_env.step([ac])
-        time_elapsed = max((time.time_ns() - start_time) / 1e9, sys.float_info.epsilon)
-        fps = int(i / time_elapsed)
-        if i % 512 == 0:
-            wandb.log(
-                {
-                    "time/iterations": i,
-                    "time/fps": fps,
-                    "time/time_elapsed": int(time_elapsed),
-                    "time/total_timesteps": i,
-                }
-            )
-        if i % 4000 == 0:
-            print(f"Step: {i}")
-    run.finish()
+
+    model = RecurrentPPO(
+        "CnnPolicy",
+        env,
+        verbose=1,
+        device=device,
+        tensorboard_log=f"runs/{run.id}",
+    )
+    try:
+        model.learn(
+            total_timesteps=100000,
+            callback=[
+                WandbCallback(
+                    gradient_save_freq=500,
+                    model_save_path=f"models/{run.id}",
+                    verbose=2,
+                ),
+            ],
+        )
+    finally:
+        env.close()
+        run.finish()
 
     # vec_env = make_vec_env(lambda: env, n_envs=1)
     # model = PPO("CnnPolicy", vec_env, verbose=1)
