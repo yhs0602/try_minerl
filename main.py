@@ -1,3 +1,4 @@
+import argparse
 import sys
 import time
 
@@ -14,26 +15,32 @@ from vision_wrapper import VisionWrapper
 # coloredlogs.install(logging.DEBUG)
 
 if __name__ == "__main__":
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--width", type=int, default=640)
+    argparser.add_argument("--height", type=int, default=360)
+    args = argparser.parse_args()
+
     minerl.env.OrderedDict
     env = gym.make("MineRLObtainDiamondShovel-v0")
-    env.render_mode = "rgb_array"
+    # env.render_mode = "rgb_array"
     run = wandb.init(
         # set the wandb project where this run will be logged
-        project="minerl-test",
+        project="ksc-journal-performance",
         entity="jourhyang123",
         # track hyperparameters and run metadata
         group="v1",
         monitor_gym=True,  # auto-upload the videos of agents playing the game
         save_code=True,  # optional
     )
-    env = Monitor(VisionWrapper(env, 640, 360))
-    env = DummyVecEnv([lambda: env])
-    env = VecVideoRecorder(
-        env,
-        f"videos/{run.id}",
-        record_video_trigger=lambda x: x % 40000 == 0,
-        video_length=20000,
-    )
+    env = VisionWrapper(env, args.width, args.height)
+    # env = Monitor()
+    # env = DummyVecEnv([lambda: env])
+    # env = VecVideoRecorder(
+    #     env,
+    #     f"videos/{run.id}",
+    #     record_video_trigger=lambda x: x % 40000 == 0,
+    #     video_length=20000,
+    # )
 
     vec_env = env
     obs = vec_env.reset()

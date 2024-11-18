@@ -6,3 +6,4 @@ models
 .DS_Store
 __pycache__
 ckpts
+venv
